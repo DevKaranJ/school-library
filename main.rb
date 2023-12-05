@@ -3,7 +3,7 @@ require_relative 'person'
 require_relative 'capitalize_decorator'
 require_relative 'trimmer_decorator'
 
-person = Person.new(22, name: 'maximilianus')  # Provide a name using the 'name:' keyword argument
+person = Person.new(22, name: 'maximilianus')
 puts "Original Name: #{person.correct_name}"
 
 capitalized_person = CapitalizeDecorator.new(person)
