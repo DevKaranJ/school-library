@@ -48,12 +48,12 @@ rental = Rental.new(rental_date, another_person, book)
 puts "\nAnother Person Details:"
 puts "Name: #{another_person.correct_name}"
 puts "Age: #{another_person.age}"
-puts "Rentals: #{another_person.rentals.map { |rental| "#{rental.book.title} on #{rental.date}" }}"
+puts "Rentals: #{another_person.rentals.map { |r| "#{r.book.title} on #{r.date}" }}"
 
 puts "\nBook Details:"
 puts "Title: #{book.title}"
 puts "Author: #{book.author}"
-puts "Rentals: #{book.rentals.map { |rental| "#{rental.person.correct_name} on #{rental.date}" }}"
+puts "Rentals: #{book.rentals.map { |r| "#{r.person.correct_name} on #{r.date}" }}"
 
 puts "\nRental Details:"
 puts "Date: #{rental.date}"

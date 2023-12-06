@@ -9,8 +9,8 @@ class Student < Person
   # Constructor for the Student class
   def initialize(age, classroom, name: 'Unknown', parent_permission: true)
     super(age, name: name, parent_permission: parent_permission)
+    classroom&.add_student(self) # Use safe navigation to add the student to the classroom
     @classroom = classroom
-    classroom.add_student(self) unless classroom.nil? # Add the student to the classroom
   end
 
   # Method representing playing hooky

@@ -15,8 +15,6 @@ class Book
     rental.book = self
   end
 
-  # Define a setter method for book
-  def book=(new_book)
-    @book = new_book
-  end
+  # Used attr_writer to define the writer method for book
+  attr_writer :book
 end

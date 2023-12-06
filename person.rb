@@ -11,7 +11,7 @@ class Person < Nameable
     @name = name
     @age = age
     @parent_permission = parent_permission
-    @rentals = []  # Initialize an empty array to store rentals
+    @rentals = []
   end
 
   def can_use_services?
@@ -25,7 +25,7 @@ class Person < Nameable
   # Method to add a rental to the person
   def add_rental(rental)
     @rentals << rental
-    rental.person = self  # Set the person for the rental
+    rental.person = self
   end
 
   private
