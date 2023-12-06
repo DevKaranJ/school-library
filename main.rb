@@ -1,15 +1,18 @@
 # main.rb
+require 'date'
 require_relative 'person'
 require_relative 'capitalize_decorator'
 require_relative 'trimmer_decorator'
 require_relative 'classroom'
 require_relative 'student'
+require_relative 'book'
+require_relative 'rental'
 
 # Existing code
-person = Person.new(22, name: 'maximilianus')
-puts "Original Name: #{person.correct_name}"
+original_person = Person.new(22, name: 'maximilianus')
+puts "Original Name: #{original_person.correct_name}"
 
-capitalized_person = CapitalizeDecorator.new(person)
+capitalized_person = CapitalizeDecorator.new(original_person)
 puts "Capitalized Name: #{capitalized_person.correct_name}"
 
 capitalized_trimmed_person = TrimmerDecorator.new(capitalized_person)
@@ -30,3 +33,29 @@ puts "Student Classroom: #{student.classroom.label}"
 # Display Classroom information
 puts "\nClassroom Label: #{math_classroom.label}"
 puts "Classroom Students: #{math_classroom.students.map(&:correct_name)}"
+
+# Create a new Person
+another_person = Person.new(22, name: 'John')
+
+# Create a Book
+book = Book.new('The Great Gatsby', 'F. Scott Fitzgerald')
+
+# Create a Rental and associate it with the new Person and Book
+rental_date = Date.new(2023, 12, 15)
+rental = Rental.new(rental_date, another_person, book)
+
+# Display information
+puts "\nAnother Person Details:"
+puts "Name: #{another_person.correct_name}"
+puts "Age: #{another_person.age}"
+puts "Rentals: #{another_person.rentals.map { |rental| "#{rental.book.title} on #{rental.date}" }}"
+
+puts "\nBook Details:"
+puts "Title: #{book.title}"
+puts "Author: #{book.author}"
+puts "Rentals: #{book.rentals.map { |rental| "#{rental.person.correct_name} on #{rental.date}" }}"
+
+puts "\nRental Details:"
+puts "Date: #{rental.date}"
+puts "Person: #{rental.person.correct_name}"
+puts "Book: #{rental.book.title}"
