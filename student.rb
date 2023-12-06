@@ -4,7 +4,7 @@ require_relative 'classroom'
 
 # Class representing a student, inheriting from Person
 class Student < Person
-  attr_accessor :classroom
+  attr_reader :classroom  # Make the classroom attribute read-only
 
   # Constructor for the Student class
   def initialize(age, classroom, name: 'Unknown', parent_permission: true)
