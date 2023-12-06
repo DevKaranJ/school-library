@@ -1,24 +1,28 @@
-# Class representing a person
-class Person
+# person.rb
+require_relative 'nameable'
+
+class Person < Nameable
   attr_accessor :name, :age
   attr_reader :id
 
-  # Constructor for the Person class
   def initialize(age, name: 'Unknown', parent_permission: true)
+    super()
     @id = Random.rand(1...1000)
     @name = name
     @age = age
     @parent_permission = parent_permission
   end
 
-  # Method to check if the person can use services
   def can_use_services?
     of_age? || @parent_permission
   end
 
+  def correct_name
+    @name
+  end
+
   private
 
-  # Private method to check if the person is of age
   def of_age?
     @age >= 18
   end
