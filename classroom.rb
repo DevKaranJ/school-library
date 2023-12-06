@@ -1,13 +1,12 @@
 # classroom.rb
-
-# Class representing a Classroom
 class Classroom
-  attr_accessor :label, :students
+  attr_accessor :label
+  attr_reader :students
 
   # Constructor for the Classroom class
   def initialize(label)
     @label = label
-    @students = [] # Initialize an empty array to store students
+    @students = []
   end
 
   # Method to add a student to the classroom
