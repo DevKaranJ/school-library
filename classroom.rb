@@ -12,6 +12,6 @@ class Classroom
   # Method to add a student to the classroom
   def add_student(student)
     @students << student
-    student.instance_variable_set(:@classroom, self)  # Set the classroom for the student
+    student.instance_variable_set(:@classroom, self)
   end
 end
