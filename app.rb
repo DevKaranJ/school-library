@@ -11,16 +11,16 @@ class LibraryApp
   end
 
   def list_all_books
-    puts "List of all books:"
+    puts 'List of all books:'
     @books.each { |book| puts "#{book.title} by #{book.author}" }
   end
 
   def list_all_people
-    puts "List of all people:"
+    puts 'List of all people:'
     @people.each { |person| puts "#{person.correct_name} (ID: #{person.id}, Age: #{person.age})" }
   end
 
-  def create_person(age, name = 'Unknown', parent_permission = true)
+  def create_person(age, name = 'Unknown', parent_permission: true)
     person = Person.new(age, name: name, parent_permission: parent_permission)
     @people << person
     puts "#{person.correct_name} has been created with ID #{person.id}."
@@ -41,7 +41,7 @@ class LibraryApp
       @rentals << rental
       puts "Rental created on #{date} for #{person.correct_name} and #{book.title}."
     else
-      puts "Person or book not found."
+      puts 'Person or book not found.'
     end
   end
 
@@ -52,7 +52,7 @@ class LibraryApp
       puts "Rentals for #{person.correct_name}:"
       person.rentals.each { |rental| puts "#{rental.book.title} on #{rental.date}" }
     else
-      puts "Person not found."
+      puts 'Person not found.'
     end
   end
 
