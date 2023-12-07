@@ -1,5 +1,5 @@
 # main.rb
-require 'date'
+require_relative 'app'
 require_relative 'person'
 require_relative 'capitalize_decorator'
 require_relative 'trimmer_decorator'
@@ -7,8 +7,8 @@ require_relative 'classroom'
 require_relative 'student'
 require_relative 'book'
 require_relative 'rental'
+require 'date'
 
-# Existing code
 original_person = Person.new(22, name: 'maximilianus')
 puts "Original Name: #{original_person.correct_name}"
 
@@ -59,3 +59,14 @@ puts "\nRental Details:"
 puts "Date: #{rental.date}"
 puts "Person: #{rental.person.correct_name}"
 puts "Book: #{rental.book.title}"
+
+# Create an instance of LibraryApp
+library_app = LibraryApp.new
+
+# Use the LibraryApp methods
+library_app.list_all_books
+library_app.list_all_people
+library_app.create_person(25, 'Emma', false)
+library_app.create_book('Ruby Programming', 'John Doe')
+library_app.create_rental(Date.new(2023, 12, 20), 1, 'The Great Gatsby')
+library_app.list_rentals_for_person(1)
