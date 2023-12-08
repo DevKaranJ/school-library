@@ -22,6 +22,18 @@ class LibraryApp
     @people.each { |person| puts "#{person.correct_name} (ID: #{person.id}, Age: #{person.age})" }
   end
 
+  def list_books_with_index
+    puts 'List of all books with index:'
+    @books.each_with_index { |book, index| puts "#{index + 1}. #{book.title} by #{book.author}" }
+  end
+
+  def list_people_with_index
+    puts 'List of all people with index:'
+    @people.each_with_index do |person, index|
+      puts "#{index + 1}. #{person.correct_name} (ID: #{person.id}, Age: #{person.age})"
+    end
+  end
+
   def create_person_prompt
     puts 'Choose the type of person to create:'
     puts '1. Teacher'
@@ -98,6 +110,27 @@ class LibraryApp
     end
   end
 
+  def create_rental_with_indices
+    list_people_with_index
+    print 'Enter the index of the person: '
+    person_index = gets.chomp.to_i - 1
+
+    list_books_with_index
+    print 'Enter the index of the book: '
+    book_index = gets.chomp.to_i - 1
+
+    person_id = @people[person_index]&.id
+    book_title = @books[book_index]&.title
+
+    if person_id && book_title
+      print 'Enter rental date: '
+      date = gets.chomp
+      create_rental(date, person_id, book_title)
+    else
+      puts 'Invalid person or book index. Please try again.'
+    end
+  end
+
   private
 
   def find_person_by_id(id)
@@ -139,13 +172,7 @@ loop do
     author = gets.chomp
     library_app.create_book(title, author)
   when 5
-    print 'Enter rental date: '
-    date = gets.chomp
-    print 'Enter person ID: '
-    person_id = gets.chomp.to_i
-    print 'Enter book title: '
-    book_title = gets.chomp
-    library_app.create_rental(date, person_id, book_title)
+    library_app.create_rental_with_indices
   when 6
     print 'Enter person ID: '
     person_id = gets.chomp.to_i
