@@ -80,6 +80,5 @@ library_app = LibraryApp.new
 # Interactive menu
 loop do
   display_menu
-  choice = choice
   handle_choice(choice, library_app)
 end
