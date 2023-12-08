@@ -48,7 +48,7 @@ class LibraryApp
     print 'Enter name (press Enter for Unknown): '
     name = gets.chomp
     print 'Does the teacher have parent permission? (true/false, press Enter for true): '
-    parent_permission = gets.chomp.downcase == 'false' ? false : true
+    parent_permission = gets.chomp.downcase != 'false'
 
     teacher = Teacher.new(age, specialization, name: name, parent_permission: parent_permission)
     @people << teacher
@@ -61,7 +61,7 @@ class LibraryApp
     print 'Enter name (press Enter for Unknown): '
     name = gets.chomp
     print 'Does the student have parent permission? (true/false, press Enter for true): '
-    parent_permission = gets.chomp.downcase == 'false' ? false : true
+    parent_permission = gets.chomp.downcase != 'false'
 
     student = Student.new(age, nil, name: name, parent_permission: parent_permission)
     @people << student
@@ -114,15 +114,15 @@ library_app = LibraryApp.new
 
 loop do
   puts "\nLibrary Management System"
-  puts "1. List all books"
-  puts "2. List all people"
-  puts "3. Create a person"
-  puts "4. Create a book"
-  puts "5. Create a rental"
-  puts "6. List rentals for a person"
-  puts "7. Exit"
+  puts '1. List all books'
+  puts '2. List all people'
+  puts '3. Create a person'
+  puts '4. Create a book'
+  puts '5. Create a rental'
+  puts '6. List rentals for a person'
+  puts '7. Exit'
 
-  print "Enter your choice: "
+  print 'Enter your choice: '
   choice = gets.chomp.to_i
 
   case choice
