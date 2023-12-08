@@ -13,7 +13,7 @@ def display_menu
   puts '7. Exit'
 end
 
-def get_choice
+def choice
   print 'Enter your choice: '
   gets.chomp.to_i
 end
@@ -80,6 +80,6 @@ library_app = LibraryApp.new
 # Interactive menu
 loop do
   display_menu
-  choice = get_choice
+  choice = choice
   handle_choice(choice, library_app)
 end
