@@ -74,7 +74,7 @@ Ensure you have the following installed:
 
 - GitHub: [@githubhandle](https://github.com/DevKaranJ)
 - Twitter: [@twitterhandle](https://twitter.com/DevKaranJ)
-- Linkdin: [@linkdinhandle](https://twitter.com/Dev_Karan_J)
+- Linkdin: [@linkdinhandle](https://www.linkedin.com/in/devkaranj/)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
