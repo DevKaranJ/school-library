@@ -39,7 +39,7 @@ class LibraryApp
   def create_person_prompt
     LibraryMenu.display_create_person_options
 
-    choice = LibraryUserInput.get_choice
+    choice = LibraryUserInput.choice
     case choice
     when 1
       create_teacher

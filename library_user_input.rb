@@ -1,7 +1,13 @@
-# library_user_input
+# library_user_input.rb
+require 'date'
 class LibraryUserInput
   def self.get_integer(prompt)
     print "#{prompt}: "
+    gets.chomp.to_i
+  end
+
+  def self.choice
+    print 'Enter your choice: '
     gets.chomp.to_i
   end
 

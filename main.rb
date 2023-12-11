@@ -37,6 +37,6 @@ library_app = LibraryApp.new
 # Interactive menu
 loop do
   LibraryMenu.display
-  choice = LibraryMenu.get_choice
+  choice = LibraryMenu.choice
   handle_choice(choice, library_app)
 end
