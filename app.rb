@@ -6,6 +6,7 @@ require_relative 'teacher'
 require_relative 'student'
 require_relative 'library_menu'
 require_relative 'library_user_input'
+require 'json'
 
 class LibraryApp
   def initialize
@@ -119,14 +120,56 @@ class LibraryApp
       puts 'Invalid person or book index. Please try again.'
     end
   end
-
-  private
+  
+  def find_book_by_title(title)
+    @books.find { |book| book.title == title }
+  end
 
   def find_person_by_id(id)
     @people.find { |person| person.id == id }
   end
 
-  def find_book_by_title(title)
-    @books.find { |book| book.title == title }
+  def save_data
+    save_books
+    save_people
+    save_rentals
+  end
+
+  def load_data
+    load_books
+    load_people
+    load_rentals
+  end
+
+  private
+
+  def save_books
+    File.open('books.json', 'w') { |file| file.write(JSON.dump(@books)) }
+  end
+
+  def load_books
+    @books = load_data_from_file('books.json') || []
+  end
+
+  def save_people
+    File.open('people.json', 'w') { |file| file.write(JSON.dump(@people)) }
+  end
+
+  def load_people
+    @people = load_data_from_file('people.json') || []
+  end
+
+  def save_rentals
+    File.open('rentals.json', 'w') { |file| file.write(JSON.dump(@rentals)) }
+  end
+
+  def load_rentals
+    @rentals = load_data_from_file('rentals.json') || []
+  end
+
+  def load_data_from_file(filename)
+    return nil unless File.exist?(filename)
+
+    JSON.parse(File.read(filename), symbolize_names: true)
   end
 end
