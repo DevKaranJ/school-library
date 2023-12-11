@@ -24,6 +24,7 @@ def handle_choice(choice, library_app)
     person_id = gets.chomp.to_i
     library_app.list_rentals_for_person(person_id)
   when 7
+    library_app.save_data
     puts 'Exiting...'
     exit
   else
@@ -31,8 +32,9 @@ def handle_choice(choice, library_app)
   end
 end
 
-# Create an instance of LibraryApp
+# Create an instance of LibraryApp and load data
 library_app = LibraryApp.new
+library_app.load_data
 
 # Interactive menu
 loop do
