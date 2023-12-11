@@ -10,44 +10,25 @@ def handle_choice(choice, library_app)
   when 2
     library_app.list_all_people
   when 3
-    create_person(library_app)
+    library_app.create_person_prompt
   when 4
-    create_book(library_app)
+    print 'Enter book title: '
+    title = gets.chomp
+    print 'Enter book author: '
+    author = gets.chomp
+    library_app.create_book(title, author)
   when 5
-    create_rental(library_app)
+    library_app.create_rental_with_indices
   when 6
-    list_rentals(library_app)
+    print 'Enter person ID: '
+    person_id = gets.chomp.to_i
+    library_app.list_rentals_for_person(person_id)
   when 7
     puts 'Exiting...'
     exit
   else
     puts 'Invalid choice. Please try again.'
   end
-end
-
-def create_person(library_app)
-  age = LibraryUserInput.get_integer('Enter age')
-  name = LibraryUserInput.get_string('Enter name')
-  parent_permission = LibraryUserInput.get_boolean('Parent permission?')
-  library_app.create_person(age, name, parent_permission: parent_permission)
-end
-
-def create_book(library_app)
-  title = LibraryUserInput.get_string('Enter book title')
-  author = LibraryUserInput.get_string('Enter author')
-  library_app.create_book(title, author)
-end
-
-def create_rental(library_app)
-  rental_date = LibraryUserInput.get_date('Enter rental date')
-  person_id = LibraryUserInput.get_integer('Enter person ID')
-  book_title = LibraryUserInput.get_string('Enter book title')
-  library_app.create_rental(rental_date, person_id, book_title)
-end
-
-def list_rentals(library_app)
-  person_id = LibraryUserInput.get_integer('Enter person ID')
-  library_app.list_rentals_for_person(person_id)
 end
 
 # Create an instance of LibraryApp
