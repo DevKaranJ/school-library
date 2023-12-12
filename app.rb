@@ -201,13 +201,20 @@ class LibraryApp
   end
 
   def load_rentals
-    File.exist?('./rentals.json') ? rentals_json = JSON.parse(File.read('rentals.json')) : return
+    return unless File.exist?('./rentals.json')
+
+    rentals_json = JSON.parse(File.read('rentals.json'))
     @rentals = rentals_json.map do |rental|
-      person = find_person_by_id(rental['person_id'])
-      book = find_book_by_title(rental['book_title'])
-      Rental.new(rental['date'], person, book)
-    end
+      person_id = rental['person_id']
+      book_title = rental['book_title']
+
+      person = find_person_by_id(person_id)
+      book = find_book_by_title(book_title)
+
+      Rental.new(rental['date'], person, book) if person && book
+    end.compact
   end
+
 
   def load_data_from_file(filename)
     return nil unless File.exist?(filename)
