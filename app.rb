@@ -58,7 +58,8 @@ class LibraryApp
     name = LibraryUserInput.get_string('Enter name (press Enter for Unknown)')
     parent_permission = LibraryUserInput.get_boolean('Does the teacher have parent permission?')
 
-    teacher = Teacher.new(age, specialization, name: name, parent_permission: parent_permission)
+    # Explicitly pass id: nil to the Teacher constructor
+    teacher = Teacher.new(age, specialization, name: name, parent_permission: parent_permission, id: nil)
     @people << teacher
     puts "#{teacher.correct_name} has been created with ID #{teacher.id}."
   end
@@ -68,7 +69,7 @@ class LibraryApp
     name = LibraryUserInput.get_string('Enter name (press Enter for Unknown)')
     parent_permission = LibraryUserInput.get_boolean('Does the student have parent permission?')
 
-    student = Student.new(age, nil, name: name, parent_permission: parent_permission)
+    student = Student.new(age, nil, name: name, parent_permission: parent_permission, id: nil)
     @people << student
     puts "#{student.correct_name} has been created with ID #{student.id}."
   end
@@ -175,15 +176,21 @@ class LibraryApp
   end
 
   def load_people
-    File.exist?('./people.json') ? people_json = JSON.parse(File.read('people.json')) : return
+    filename = './people.json'
+    return unless File.exist?(filename)
+
+    people_json = JSON.parse(File.read(filename))
     @people = people_json.map do |person|
       if person['type'] == 'Teacher'
         Teacher.new(person['age'], person['specialization'], name: person['name'],
-                                                             parent_permission: person['parent_permission'])
+                                                             parent_permission: person['parent_permission'],
+                                                             id: person['id'])
       elsif person['type'] == 'Student'
-        Student.new(person['age'], nil, name: person['name'], parent_permission: person['parent_permission'])
+        Student.new(person['age'], nil, name: person['name'],
+                                        parent_permission: person['parent_permission'], id: person['id'])
       else
-        Person.new(person['age'], name: person['name'], parent_permission: person['parent_permission'])
+        Person.new(person['age'], name: person['name'], parent_permission: person['parent_permission'],
+                                  id: person['id'])
       end
     end
   end
@@ -193,28 +200,31 @@ class LibraryApp
       {
         date: rental.date,
         person_id: rental.person.id,
-        book_title: rental.book.title,
-        book_author: rental.book.author,
+        book_title: rental.book.title
       }
     end
     File.write('./rentals.json', JSON.generate(rentals_json))
   end
 
   def load_rentals
-    return unless File.exist?('./rentals.json')
+    filename = './rentals.json'
+    return unless File.exist?(filename)
 
-    rentals_json = JSON.parse(File.read('rentals.json'))
+    rentals_json = JSON.parse(File.read(filename))
     @rentals = rentals_json.map do |rental|
       person_id = rental['person_id']
       book_title = rental['book_title']
-
       person = find_person_by_id(person_id)
+
+      if person.nil?
+        puts "Person not found for ID: #{person_id}"
+        puts "Available person IDs: #{@people.map(&:id)}"
+      end
+
       book = find_book_by_title(book_title)
-
-      Rental.new(rental['date'], person, book) if person && book
-    end.compact
+      Rental.new(rental['date'], person, book)
+    end
   end
-
 
   def load_data_from_file(filename)
     return nil unless File.exist?(filename)
