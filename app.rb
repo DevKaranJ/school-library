@@ -161,19 +161,52 @@ class LibraryApp
   end
 
   def save_people
-    File.open('people.json', 'w') { |file| file.write(JSON.dump(@people)) }
+    people_json = @people.map do |person|
+      {
+        type: person.class.name,
+        id: person.id,
+        name: person.name,
+        age: person.age,
+        parent_permission: person.respond_to?(:parent_permission) ? person.parent_permission : nil,
+        specialization: person.respond_to?(:specialization) ? person.specialization : nil
+      }
+    end
+    File.write('./people.json', JSON.generate(people_json))
   end
 
   def load_people
-    @people = load_data_from_file('people.json') || []
+    File.exist?('./people.json') ? people_json = JSON.parse(File.read('people.json')) : return
+    @people = people_json.map do |person|
+      if person['type'] == 'Teacher'
+        Teacher.new(person['age'], person['specialization'], name: person['name'],
+                                                             parent_permission: person['parent_permission'])
+      elsif person['type'] == 'Student'
+        Student.new(person['age'], nil, name: person['name'], parent_permission: person['parent_permission'])
+      else
+        Person.new(person['age'], name: person['name'], parent_permission: person['parent_permission'])
+      end
+    end
   end
 
   def save_rentals
-    File.open('rentals.json', 'w') { |file| file.write(JSON.dump(@rentals)) }
+    rentals_json = @rentals.map do |rental|
+      {
+        date: rental.date,
+        person_id: rental.person.id,
+        book_title: rental.book.title,
+        book_author: rental.book.author,
+      }
+    end
+    File.write('./rentals.json', JSON.generate(rentals_json))
   end
 
   def load_rentals
-    @rentals = load_data_from_file('rentals.json') || []
+    File.exist?('./rentals.json') ? rentals_json = JSON.parse(File.read('rentals.json')) : return
+    @rentals = rentals_json.map do |rental|
+      person = find_person_by_id(rental['person_id'])
+      book = find_book_by_title(rental['book_title'])
+      Rental.new(rental['date'], person, book)
+    end
   end
 
   def load_data_from_file(filename)
