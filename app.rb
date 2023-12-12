@@ -1,4 +1,3 @@
-# app.rb
 require_relative 'person'
 require_relative 'book'
 require_relative 'rental'
@@ -8,18 +7,20 @@ require_relative 'library_menu'
 require_relative 'library_user_input'
 require 'json'
 
-class LibraryApp
-  def initialize
-    @books = []
-    @people = []
-    @rentals = []
-  end
-
+module BookManagement
   def list_all_books
     puts 'List of all books:'
     @books.each { |book| puts "#{book.title} by #{book.author}" }
   end
 
+  def create_book(title, author)
+    book = Book.new(title, author)
+    @books << book
+    puts "#{book.title} by #{book.author} has been added to the library."
+  end
+end
+
+module PersonManagement
   def list_all_people
     puts 'List of all people:'
     @people.each { |person| puts "#{person.correct_name} (ID: #{person.id}, Age: #{person.age})" }
@@ -73,13 +74,9 @@ class LibraryApp
     @people << student
     puts "#{student.correct_name} has been created with ID #{student.id}."
   end
+end
 
-  def create_book(title, author)
-    book = Book.new(title, author)
-    @books << book
-    puts "#{book.title} by #{book.author} has been added to the library."
-  end
-
+module RentalManagement
   def create_rental(date, person_id, book_title)
     person = find_person_by_id(person_id)
     book = find_book_by_title(book_title)
@@ -128,6 +125,18 @@ class LibraryApp
 
   def find_person_by_id(id)
     @people.find { |person| person.id == id }
+  end
+end
+
+class LibraryApp
+  include BookManagement
+  include PersonManagement
+  include RentalManagement
+
+  def initialize
+    @books = []
+    @people = []
+    @rentals = []
   end
 
   def save_data
