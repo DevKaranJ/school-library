@@ -120,7 +120,7 @@ class LibraryApp
       puts 'Invalid person or book index. Please try again.'
     end
   end
-  
+
   def find_book_by_title(title)
     @books.find { |book| book.title == title }
   end
@@ -144,11 +144,20 @@ class LibraryApp
   private
 
   def save_books
-    File.open('books.json', 'w') { |file| file.write(JSON.dump(@books)) }
+    books_json = @books.map do |book|
+      {
+        title: book.title,
+        author: book.author
+      }
+    end
+    File.write('./books.json', JSON.generate(books_json))
   end
 
   def load_books
-    @books = load_data_from_file('books.json') || []
+    File.exist?('./books.json') ? books_json = JSON.parse(File.read('books.json')) : return
+    @books = books_json.map do |book|
+      Book.new(book['title'], book['author'])
+    end
   end
 
   def save_people
