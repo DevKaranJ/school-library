@@ -1,1 +1,1 @@
-[{"type":"Teacher","id":616,"name":"51","age":51,"parent_permission":null,"specialization":"51"},{"type":"Student","id":442,"name":"51","age":51,"parent_permission":null,"specialization":null}]
+[{"type":"Teacher","id":616,"name":"Max","age":51,"parent_permission":null,"specialization":"Math"},{"type":"Student","id":442,"name":"Rex","age":16,"parent_permission":null,"specialization":null}]
