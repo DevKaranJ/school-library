@@ -1,4 +1,4 @@
-# spec/rental_spec.rb
+# rental_spec.rb
 require_relative '../rental'
 require_relative '../person'
 require_relative '../book'
