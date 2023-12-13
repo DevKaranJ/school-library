@@ -1,7 +1,6 @@
 require_relative '../classroom'
 require_relative '../student'
 
-
 describe Classroom do
   describe '#initialize' do
     it 'creates a classroom with the specified label' do
