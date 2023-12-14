@@ -1,5 +1,7 @@
 require_relative '../student'
 require_relative '../classroom'
+require_relative '../trimmer_decorator'
+require_relative '../capitalize_decorator'
 
 describe Student do
   let(:student_name) { 'unknown' }
@@ -60,6 +62,22 @@ describe Student do
       student = Student.new(student_age, some_classroom_instance, name: student_name,
                                                                   parent_permission: parent_permission)
       expect(student.correct_name).to eq(student_name)
+    end
+
+    it 'correctly returns trimmed name' do
+      student = Student.new(student_age, some_classroom_instance, name: student_name,
+                                                                  parent_permission: parent_permission)
+      trimmed_student = TrimmerDecorator.new(student)
+      allow(trimmed_student).to receive(:trimmed_name) { student_name[0..9] }
+      expect(trimmed_student.trimmed_name).to eq(student_name[0..9])
+    end
+
+    it 'correctly returns capitalized name' do
+      student = Student.new(student_age, some_classroom_instance, name: student_name,
+                                                                  parent_permission: parent_permission)
+      capitalized_student = CapitalizeDecorator.new(student)
+      allow(capitalized_student).to receive(:capitalize_name) { student_name.capitalize }
+      expect(capitalized_student.capitalize_name).to eq(student_name.capitalize)
     end
   end
 end
