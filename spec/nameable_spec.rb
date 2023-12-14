@@ -1,15 +1,14 @@
-# Nameable_spec.rb
+# nameable_spec.rb
 
-require_relative '../nameable'  # Adjust the path based on your project structure
+require_relative '../nameable'
+
+class TestNameable < Nameable
+  def correct_name
+    'John Doe'
+  end
+end
 
 RSpec.describe Nameable do
-  # Let's create a simple subclass for testing purposes
-  class TestNameable < Nameable
-    def correct_name
-      "John Doe"
-    end
-  end
-
   let(:nameable_instance) { TestNameable.new }
 
   describe '#correct_name' do
