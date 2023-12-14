@@ -54,4 +54,12 @@ describe Student do
       expect(student.play_hooky).to be_a(String)
     end
   end
+
+  describe '#correct_name' do
+    it 'returns the name' do
+      student = Student.new(student_age, some_classroom_instance, name: student_name,
+                                                                  parent_permission: parent_permission)
+      expect(student.correct_name).to eq(student_name)
+    end
+  end
 end
